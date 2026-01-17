@@ -1,0 +1,7 @@
+- name: Run Claude Code with GLM Coding Plan
+  id: glm
+  uses: anthropics/claude-code-action@v1
+  env:
+    ANTHROPIC_BASE_URL: 'https://api.z.ai/api/anthropic'
+  with:
+    anthropic_api_key: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
