@@ -57,7 +57,7 @@ jobs:
       - name: Run Claude Code with MiniMax Coding Plan
         uses: anthropics/claude-code-action@v1
         env:
-          ANTHROPIC_BASE_URL: "https://api.minimax.ai/api/anthropic"
+          ANTHROPIC_BASE_URL: "https://api.minimax.io/anthropic"
           API_TIMEOUT_MS: "3000000"
           CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
           ANTHROPIC_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
