@@ -43,6 +43,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check GLM API key configured
+        env:
+          GLM_API_KEY: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
+        run: |
+          if [ -z "$GLM_API_KEY" ]; then
+            echo "Missing or empty secret: GLM_CODING_PLAN_API_KEY"
+            exit 1
+          fi
+
       - name: Run Claude Code with GLM Coding Plan
         uses: anthropics/claude-code-action@v1
         env:

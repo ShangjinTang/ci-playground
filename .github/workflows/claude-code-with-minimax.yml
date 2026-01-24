@@ -43,6 +43,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check MiniMax API key configured
+        env:
+          MINIMAX_API_KEY: ${{ secrets.MINIMAX_CODING_PLAN_API_KEY }}
+        run: |
+          if [ -z "$MINIMAX_API_KEY" ]; then
+            echo "Missing or empty secret: MINIMAX_CODING_PLAN_API_KEY"
+            exit 1
+          fi
+
       - name: Run Claude Code with MiniMax Coding Plan
         uses: anthropics/claude-code-action@v1
         env:
