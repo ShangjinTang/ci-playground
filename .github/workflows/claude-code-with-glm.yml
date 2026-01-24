@@ -67,5 +67,5 @@ jobs:
           CLAUDE_CODE_SUBAGENT_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
         with:
           anthropic_api_key: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
-          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           trigger_phrase: "@glm"
