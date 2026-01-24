@@ -40,6 +40,8 @@ jobs:
          github.event.issue.author_association == 'COLLABORATOR'))
 
     runs-on: ubuntu-latest
+    env:
+      CLAUDE_CODE_MODEL_NAME: ${{ vars.GLM_CODING_PLAN_MODEL_NAME || 'GLM-4.7' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -55,7 +57,14 @@ jobs:
       - name: Run Claude Code with GLM Coding Plan
         uses: anthropics/claude-code-action@v1
         env:
-          ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+          ANTHROPIC_BASE_URL: "https://api.z.ai/api/anthropic"
+          API_TIMEOUT_MS: "3000000"
+          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
+          ANTHROPIC_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
+          ANTHROPIC_DEFAULT_SONNET_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
+          ANTHROPIC_DEFAULT_OPUS_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
+          ANTHROPIC_DEFAULT_HAIKU_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
+          CLAUDE_CODE_SUBAGENT_MODEL: ${{ env.CLAUDE_CODE_MODEL_NAME }}
         with:
           anthropic_api_key: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
           # github_token: ${{ secrets.GITHUB_TOKEN }}
