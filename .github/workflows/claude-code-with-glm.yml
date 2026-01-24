@@ -1,7 +1,53 @@
-- name: Run Claude Code with GLM Coding Plan
-  id: glm
-  uses: anthropics/claude-code-action@v1
-  env:
-    ANTHROPIC_BASE_URL: 'https://api.z.ai/api/anthropic'
-  with:
-    anthropic_api_key: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
+name: GLM Assistant
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned, labeled]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  glm-response:
+    if: |
+      (github.event_name == 'issue_comment' &&
+        contains(github.event.comment.body, '@glm') &&
+        (github.event.comment.author_association == 'OWNER' ||
+         github.event.comment.author_association == 'MEMBER' ||
+         github.event.comment.author_association == 'COLLABORATOR')) ||
+      (github.event_name == 'pull_request_review_comment' &&
+        contains(github.event.comment.body, '@glm') &&
+        (github.event.comment.author_association == 'OWNER' ||
+         github.event.comment.author_association == 'MEMBER' ||
+         github.event.comment.author_association == 'COLLABORATOR')) ||
+      (github.event_name == 'pull_request_review' &&
+        contains(github.event.review.body, '@glm') &&
+        (github.event.review.author_association == 'OWNER' ||
+         github.event.review.author_association == 'MEMBER' ||
+         github.event.review.author_association == 'COLLABORATOR')) ||
+      (github.event_name == 'issues' &&
+        (contains(github.event.issue.body, '@glm') || contains(github.event.issue.labels.*.name, 'glm')) &&
+        (github.event.issue.author_association == 'OWNER' ||
+         github.event.issue.author_association == 'MEMBER' ||
+         github.event.issue.author_association == 'COLLABORATOR'))
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Claude Code with GLM Coding Plan
+        uses: anthropics/claude-code-action@v1
+        env:
+          ANTHROPIC_BASE_URL: https://api.z.ai/api/anthropic
+        with:
+          anthropic_api_key: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
+          # github_token: ${{ secrets.GITHUB_TOKEN }}
+          trigger_phrase: "@glm"
