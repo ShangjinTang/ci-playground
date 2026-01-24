@@ -19,22 +19,22 @@ jobs:
   glm-response:
     if: |
       (github.event_name == 'issue_comment' &&
-        contains(github.event.comment.body, '@glm') &&
+        contains(github.event.comment.body, '@glm-agent') &&
         (github.event.comment.author_association == 'OWNER' ||
          github.event.comment.author_association == 'MEMBER' ||
          github.event.comment.author_association == 'COLLABORATOR')) ||
       (github.event_name == 'pull_request_review_comment' &&
-        contains(github.event.comment.body, '@glm') &&
+        contains(github.event.comment.body, '@glm-agent') &&
         (github.event.comment.author_association == 'OWNER' ||
          github.event.comment.author_association == 'MEMBER' ||
          github.event.comment.author_association == 'COLLABORATOR')) ||
       (github.event_name == 'pull_request_review' &&
-        contains(github.event.review.body, '@glm') &&
+        contains(github.event.review.body, '@glm-agent') &&
         (github.event.review.author_association == 'OWNER' ||
          github.event.review.author_association == 'MEMBER' ||
          github.event.review.author_association == 'COLLABORATOR')) ||
       (github.event_name == 'issues' &&
-        (contains(github.event.issue.body, '@glm') || contains(github.event.issue.labels.*.name, 'glm')) &&
+        (contains(github.event.issue.body, '@glm-agent') || contains(github.event.issue.labels.*.name, 'glm-agent')) &&
         (github.event.issue.author_association == 'OWNER' ||
          github.event.issue.author_association == 'MEMBER' ||
          github.event.issue.author_association == 'COLLABORATOR'))
@@ -68,4 +68,4 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.GLM_CODING_PLAN_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          trigger_phrase: "@glm"
+          trigger_phrase: "@glm-agent"

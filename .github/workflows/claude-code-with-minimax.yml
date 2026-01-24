@@ -19,22 +19,22 @@ jobs:
   minimax-response:
     if: |
       (github.event_name == 'issue_comment' &&
-        contains(github.event.comment.body, '@minimax') &&
+        contains(github.event.comment.body, '@minimax-agent') &&
         (github.event.comment.author_association == 'OWNER' ||
          github.event.comment.author_association == 'MEMBER' ||
          github.event.comment.author_association == 'COLLABORATOR')) ||
       (github.event_name == 'pull_request_review_comment' &&
-        contains(github.event.comment.body, '@minimax') &&
+        contains(github.event.comment.body, '@minimax-agent') &&
         (github.event.comment.author_association == 'OWNER' ||
          github.event.comment.author_association == 'MEMBER' ||
          github.event.comment.author_association == 'COLLABORATOR')) ||
       (github.event_name == 'pull_request_review' &&
-        contains(github.event.review.body, '@minimax') &&
+        contains(github.event.review.body, '@minimax-agent') &&
         (github.event.review.author_association == 'OWNER' ||
          github.event.review.author_association == 'MEMBER' ||
          github.event.review.author_association == 'COLLABORATOR')) ||
       (github.event_name == 'issues' &&
-        (contains(github.event.issue.body, '@minimax') || contains(github.event.issue.labels.*.name, 'minimax')) &&
+        (contains(github.event.issue.body, '@minimax-agent') || contains(github.event.issue.labels.*.name, 'minimax-agent')) &&
         (github.event.issue.author_association == 'OWNER' ||
          github.event.issue.author_association == 'MEMBER' ||
          github.event.issue.author_association == 'COLLABORATOR'))
@@ -68,4 +68,4 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.MINIMAX_CODING_PLAN_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          trigger_phrase: "@minimax"
+          trigger_phrase: "@minimax-agent"
